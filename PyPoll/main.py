@@ -12,6 +12,8 @@ candidate_votes = []
 # Initialize variables to track votes and candidates
 most_votes = 0
 total_votes = 0
+current_index = 0
+current_candidate = ""
 winning_candidate = ""
 
 # Read in the CSV file
@@ -23,13 +25,15 @@ with open(votingCSV, 'r') as csvfile:
 
     # Loop through the data
     for row in csvreader:
+        current_candidate = row[2]
 
         # Determine if candidate is in list and add name and/or vote to totals
-        if(row[2] not in candidate_names):
+        if current_candidate in candidate_names:
+            current_index = candidate_names.index(current_candidate)
+            candidate_votes[current_index] = str((int(candidate_votes[current_index])) + 1)
+        else:
             candidate_names.append(row[2])
             candidate_votes.append("1")
-        else:
-            candidate_votes[candidate_names.index(row[2])] = candidate_votes[candidate_names.index(row[2])] + 1
 
 # Loop through results to determine winning candidate and total vote count
 for results in candidate.votes:
