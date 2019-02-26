@@ -5,10 +5,6 @@ import sys
 # Path to collect data from the Resources folder
 budgetCSV = os.path.join('..', 'Resources', 'budget_data.csv')
 
-# Print inital information to the screen
-print("\nFinancial Information")
-print("--------------------------")
-
 # Initalize variables for total months, profit/loss, and greatest increase and decrease
 months = 0
 total_amount = 0
@@ -43,18 +39,19 @@ with open(budgetCSV, 'r') as csvfile:
             most_losses_month = row[0]
             most_losses = int(row[1])
 
+def print_results():
+    print("\nFinancial Information")
+    print("--------------------------")
+    print(f"Total Months: {months}")
+    print(f"Total: ${int(total_amount)}")
+    print(f"Average Change: ${int(total_amount / months)}")
+    print(f"Greatest Increase in Profits: {most_profits_month} $({int(most_profits)})")
+    print(f"Greatest Decrease in Profits: {most_losses_month} $({int(most_losses)})")
+
 # Print results to the screen
-print(f"Total Months: {months}")
-print(f"Total: ${int(total_amount)}")
-print(f"Average Change: ${int(total_amount / months)}")
-print(f"Greatest Increase in Profits: {most_profits_month} $({int(most_profits)})")
-print(f"Greatest Decrease in Profits: {most_losses_month} $({int(most_losses)})")
+print_results()
 
 # Print results to a text file
 sys.stdout = open("PyBankOutput.txt", "w")
-print(f"Total Months: {months}")
-print(f"Total: ${int(total_amount)}")
-print(f"Average Change: ${int(total_amount / months)}")
-print(f"Greatest Increase in Profits: {most_profits_month} $({int(most_profits)})")
-print(f"Greatest Decrease in Profits: {most_losses_month} $({int(most_losses)})")
+print_results()
 sys.stdout.close()

@@ -1,3 +1,6 @@
+
+Financial Information
+--------------------------
 Total Months: 86
 Total: $38382578
 Average Change: $446309
