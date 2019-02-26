@@ -40,7 +40,7 @@ with open(budgetCSV, 'r') as csvfile:
             most_losses = int(row[1])
 
 def print_results():
-    print("\nFinancial Information")
+    print("Financial Information")
     print("--------------------------")
     print(f"Total Months: {months}")
     print(f"Total: ${int(total_amount)}")

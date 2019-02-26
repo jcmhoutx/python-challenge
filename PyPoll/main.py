@@ -3,18 +3,19 @@ import csv
 import sys
 
 # Path to collect data from the Resources folder
-budgetCSV = os.path.join('..', 'Resources', 'budget_data.csv')
+votingCSV = os.path.join('..', 'Resources', 'election_data.csv')
 
-# Initalize variables for total months, profit/loss, and greatest increase and decrease
-months = 0
-total_amount = 0
-most_profits = 0
-most_profits_month = ""
-most_losses = 0
-most_losses_month = ""
+# Create lists to hold candidate names and vote totals
+candidate_names = []
+candidate_votes = []
+
+# Initialize variables to track votes and candidates
+most_votes = 0
+total_votes = 0
+winning_candidate = ""
 
 # Read in the CSV file
-with open(budgetCSV, 'r') as csvfile:
+with open(votingCSV, 'r') as csvfile:
 
     # Split the data on commas
     csvreader = csv.reader(csvfile, delimiter=',')
@@ -23,38 +24,36 @@ with open(budgetCSV, 'r') as csvfile:
     # Loop through the data
     for row in csvreader:
 
-        # Add each month to the total
-        months = months + 1
+        # Determine if candidate is in list and add name and/or vote to totals
+        if(row[2] not in candidate_names):
+            candidate_names.append(row[2])
+            candidate_votes.append("1")
+        else:
+            candidate_votes[candidate_names.index(row[2])] = candidate_votes[candidate_names.index(row[2])] + 1
 
-        # Calculate profit or loss for the month
-        total_amount = total_amount + float(row[1])
-        
-        # Determine if profits are highest yet
-        if(int(row[1]) > most_profits):
-            most_profits_month = row[0]
-            most_profits = int(row[1])
-        
-        # Determine if losses are lowest yet
-        if(int(row[1]) < most_losses):
-            most_losses_month = row[0]
-            most_losses = int(row[1])
+# Loop through results to determine winning candidate and total vote count
+for results in candidate.votes:
+    total_votes = int(candidate_votes[results]) + total_votes
+    if(int(candidate_votes[results]) > most_votes):
+        most_votes = int(candidate_votes[results])
+        winning_candidate = candidate_names[results]
+
+# Function to print results to screen and file
+def print_results():
+    print("Election Results")
+    print("-----------------------------")
+    print(f"Total Votes:  {total_votes}")
+    print("-----------------------------")
+    for candidate in candidate_names:
+        print(f"{candidate_names[candidate]}:  {float((candidate_votes[candidate] / total_votes) * 100)}%  ({int(candidate_votes[candidate])})")
+    print("-----------------------------")
+    print(f"Winner:  {winning_candidate}")
+    print("-----------------------------")
 
 # Print results to the screen
-print("\nFinancial Information")
-print("--------------------------")
-print(f"Total Months: {months}")
-print(f"Total: ${int(total_amount)}")
-print(f"Average Change: ${int(total_amount / months)}")
-print(f"Greatest Increase in Profits: {most_profits_month} $({int(most_profits)})")
-print(f"Greatest Decrease in Profits: {most_losses_month} $({int(most_losses)})")
+print_results()
 
 # Print results to a text file
-sys.stdout = open("PyBankOutput.txt", "w")
-print("\nFinancial Information")
-print("--------------------------")
-print(f"Total Months: {months}")
-print(f"Total: ${int(total_amount)}")
-print(f"Average Change: ${int(total_amount / months)}")
-print(f"Greatest Increase in Profits: {most_profits_month} $({int(most_profits)})")
-print(f"Greatest Decrease in Profits: {most_losses_month} $({int(most_losses)})")
+sys.stdout = open("PyPollOutput.txt", "w")
+print_results()
 sys.stdout.close()
