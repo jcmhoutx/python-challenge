@@ -3,7 +3,7 @@ import csv
 import sys
 
 # Path to collect data from the Resources folder
-votingCSV = os.path.join('..', 'Resources', 'election_data.csv')
+votingCSV = os.path.join('..', 'Resources', 'election_data2.csv')
 
 # Create lists to hold candidate names and vote totals
 candidate_names = []
@@ -13,6 +13,7 @@ candidate_votes = []
 most_votes = 0
 total_votes = 0
 current_index = 0
+current_votes = 0
 current_candidate = ""
 winning_candidate = ""
 
@@ -36,11 +37,13 @@ with open(votingCSV, 'r') as csvfile:
             candidate_votes.append("1")
 
 # Loop through results to determine winning candidate and total vote count
-for results in candidate.votes:
-    total_votes = int(candidate_votes[results]) + total_votes
-    if(int(candidate_votes[results]) > most_votes):
-        most_votes = int(candidate_votes[results])
-        winning_candidate = candidate_names[results]
+for results in candidate_votes:
+    current_votes = int(results)
+    current_index = candidate_votes.index(results)
+    total_votes = total_votes + current_votes
+    if current_votes > most_votes:
+        most_votes = current_votes
+        winning_candidate = candidate_names[current_index]
 
 # Function to print results to screen and file
 def print_results():
@@ -49,7 +52,8 @@ def print_results():
     print(f"Total Votes:  {total_votes}")
     print("-----------------------------")
     for candidate in candidate_names:
-        print(f"{candidate_names[candidate]}:  {float((candidate_votes[candidate] / total_votes) * 100)}%  ({int(candidate_votes[candidate])})")
+        current_index = candidate_names.index(candidate)
+        print(f"{candidate_names[current_index]}:  {int(candidate_votes[current_index]) / total_votes * 100}%  ({int(candidate_votes[current_index])})")
     print("-----------------------------")
     print(f"Winner:  {winning_candidate}")
     print("-----------------------------")
