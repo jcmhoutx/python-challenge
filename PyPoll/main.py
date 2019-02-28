@@ -3,7 +3,7 @@ import csv
 import sys
 
 # Path to collect data from the Resources folder
-votingCSV = os.path.join('..', 'Resources', 'election_data2.csv')
+votingCSV = os.path.join('..', 'Resources', 'election_data.csv')
 
 # Create lists to hold candidate names and vote totals
 candidate_names = []
@@ -53,7 +53,7 @@ def print_results():
     print("-----------------------------")
     for candidate in candidate_names:
         current_index = candidate_names.index(candidate)
-        print(f"{candidate_names[current_index]}:  {int(candidate_votes[current_index]) / total_votes * 100}%  ({int(candidate_votes[current_index])})")
+        print(f"{candidate_names[current_index]}:  {round(int(candidate_votes[current_index]) / total_votes * 100, 3)}%  ({int(candidate_votes[current_index])})")
     print("-----------------------------")
     print(f"Winner:  {winning_candidate}")
     print("-----------------------------")
