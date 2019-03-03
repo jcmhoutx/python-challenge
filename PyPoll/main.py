@@ -28,7 +28,7 @@ with open(votingCSV, 'r') as csvfile:
     for row in csvreader:
         current_candidate = row[2]
 
-        # Determine if candidate is in list and add name and/or vote to totals
+        # Determine if candidate is in list and add name and/or vote to totals at same index
         if current_candidate in candidate_names:
             current_index = candidate_names.index(current_candidate)
             candidate_votes[current_index] = str((int(candidate_votes[current_index])) + 1)
